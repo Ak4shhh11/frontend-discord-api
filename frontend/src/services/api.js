@@ -1,8 +1,12 @@
 import axios from "axios"
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000"
+// Use VITE_API_URL when provided. When running on Vercel without a backend URL
+// we fall back to relative paths so the site calls its own serverless functions
+// (e.g. /api/auth/login). Previously defaulted to localhost which broke hosted
+// site calls when no env var was set.
+const API_URL = import.meta.env.VITE_API_URL ?? ""
 
-console.log("🔗 API Base URL:", API_URL)
+console.log("🔗 API Base URL:", API_URL || "(relative)")
 
 const api = axios.create({
   baseURL: API_URL,
